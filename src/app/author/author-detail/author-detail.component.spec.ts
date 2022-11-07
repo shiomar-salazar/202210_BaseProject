@@ -2,46 +2,33 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
-import { BookDetailComponent } from './book-detail.component';
 import { faker } from '@faker-js/faker';
-import { BookDetail } from '../book-detail';
-import { Editorial } from 'src/app/editorial/editorial';
+
+import { AuthorDetailComponent } from './author-detail.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthorDetail } from '../author-detail';
 
-describe('BookDetailComponent', () => {
-  let component: BookDetailComponent;
-  let fixture: ComponentFixture<BookDetailComponent>;
+describe('AuthorDetailComponent', () => {
+  let component: AuthorDetailComponent;
+  let fixture: ComponentFixture<AuthorDetailComponent>;
   let debug: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports:[HttpClientModule, RouterTestingModule],
-      declarations: [ BookDetailComponent ]
+      declarations: [ AuthorDetailComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookDetailComponent);
+    fixture = TestBed.createComponent(AuthorDetailComponent);
     component = fixture.componentInstance;
 
-    let editorial = new Editorial(
-      faker.datatype.number(),
-      faker.lorem.sentence()
+    component.authorDetail = new AuthorDetail(
+      faker.datatype.number(), faker.lorem.sentence(),  faker.date.past(), faker.image.imageUrl(), faker.lorem.sentence(), []
     );
-
-    component.bookDetail= new BookDetail(
-        faker.datatype.number(),
-        faker.lorem.sentence(),
-        faker.lorem.sentence(),
-        faker.lorem.sentence(),
-        faker.image.imageUrl(),
-        faker.date.past(),
-        editorial,
-        [],[]
-      );
 
     fixture.detectChanges();
     debug = fixture.debugElement;
@@ -53,8 +40,7 @@ describe('BookDetailComponent', () => {
 
   it('should have an img element', () => {
     expect(debug.query(By.css('img')).attributes['alt']).toEqual(
-      component.bookDetail.name
+      component.authorDetail.name
     );
   });
-
 });
